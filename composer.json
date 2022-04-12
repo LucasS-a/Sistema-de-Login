@@ -1,8 +1,13 @@
 {
     "require": {
         "webonyx/graphql-php": "^14.11",
-        "slim/slim": "3.*",
-        "tuupola/slim-jwt-auth": "3.5"
+        "slim/slim": "4.*",
+        "tuupola/slim-jwt-auth": "3.5",
+        "slim/psr7": "^1.5",
+        "nyholm/psr7": "^1.5",
+        "nyholm/psr7-server": "^1.0",
+        "guzzlehttp/psr7": "^2",
+        "laminas/laminas-diactoros": "^2.9"
     },
 
     "autoload": {
