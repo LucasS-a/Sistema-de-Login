@@ -26,3 +26,64 @@ CREATE TABLE tb_tokens (
     CONSTRAINT fk_tokens_tb_users 
         FOREIGN KEY (idUser) REFERENCES tb_users(idUser)
 );
+
+DELIMITER ;;
+CREATE PROCEDURE sp_users_save(
+pname VARCHAR(30),
+plastName VARCHAR(30), 
+plogin VARCHAR(30), 
+ppassword VARCHAR(256), 
+pemail VARCHAR(128), 
+pgender tinyint
+)
+BEGIN
+	
+    INSERT INTO tb_users(
+        name,
+        lastName, 
+        login, 
+        password, 
+        email, 
+        gender
+    ) VALUES(
+        pname,
+        plastName, 
+        plogin, 
+        ppassword, 
+        pemail, 
+        pgender
+    );
+    
+    SELECT * FROM tb_users WHERE idUser = LAST_INSERT_ID();
+    
+END ;;
+DELIMITER ;
+
+
+DELIMITER ;;
+CREATE PROCEDURE sp_usersupdate_save(
+pidUser INT,
+pname VARCHAR(30),
+plastName VARCHAR(30),
+plogin VARCHAR(30),
+ppassword VARCHAR(256), 
+pemail VARCHAR(128),
+pgender INT
+)
+BEGIN
+    
+    UPDATE tb_users
+    SET
+        name = pname,
+        lastName = plastName,
+        login = plogin,
+        password = ppassword,
+        email = pemail,
+        gender = pgender
+	WHERE 
+        idUser = pidUser;
+    
+    SELECT * FROM tb_users WHERE idUser = pidUser;
+    
+END ;;
+DELIMITER ;

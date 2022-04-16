@@ -34,14 +34,16 @@ abstract class Model {
         
         if ( $prefix === 'set') {
             
-            $this->set(strtolower($name), $arguments[0]);
+            $this->set(lcfirst($name), $arguments[0]);
 
         }else if ($prefix === 'get') {
-            
-            return $this->get(strtolower($name));
+           
+            return $this->get(lcfirst($name));
         
         } else {
+
             throw new ModelException("Método não reconhecido.", 500);
+        
         }
     }
 
@@ -50,7 +52,7 @@ abstract class Model {
      * 
      * Método responsável por setar os valores do objeto.
      */
-    protected function set($name, $arg)
+    public function set($name, $arg)
     {
         $this->values[$name] = $arg;
     }
@@ -60,14 +62,30 @@ abstract class Model {
      * 
      * Método responsável por buscar os valores do objeto.
      */
-    protected function get($name)
+    public function get($name)
     {
         if (isset($this->values[$name])) {
             
             return $this->values[$name];
         
         }else {
-            throw new \Exception('Atributo não definido');
+
+            throw new ModelException('Atributo não definido', 500);
+        
         }
+    }
+
+    public function setValues(array $values)
+    {
+        foreach ($values as $key => $value) {
+
+            $this->{"set".$key}($value);
+        
+        }
+    }
+
+    public function getValues()
+    {
+        return $this->values;
     }
 }
