@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Models\Classes\Token;
 use App\DB\mysql\UserDAO;
 use App\Exception\UserException;
 use App\Exception\DataBaseException;
@@ -9,8 +10,20 @@ use App\Models\Classes\User;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * UserController
+ * 
+ * Classe responsável por controlar o fluxo de dados referente ao user.
+ */
 class UserController {
 
+    /**
+     * login
+     * 
+     * Método responsável por receber login e senha, buscar no banco se tem cadastro no banco.
+     * @param Request $request
+     * @param Response $response
+     */
     public function login(Request $request, Response $response)
     {
         $contents = json_decode($request->getBody()->getContents(), true);
@@ -42,8 +55,13 @@ class UserController {
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
             }else {
 
+                $token = new Token;
+
+                $token = $token->CreateToken($user);
+
                 $response->getBody()->write(json_encode([
-                    'ok'
+                    'token' => $token->getToken(),
+                    'refreshToken' => $token->getRefreshToken()
                 ]));
     
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
@@ -66,6 +84,13 @@ class UserController {
         }
     }
 
+    /**
+     * register
+     * 
+     * Método  responsável por receber os dados e cadastra no banco de dados.
+     * @param $request
+     * @param $response
+     */
     public function register(Request $request, Response $response)
     {
         $contents = json_decode($request->getBody()->getContents(), true);
@@ -104,13 +129,21 @@ class UserController {
         return $response;
     }
 
+    /**
+     * update 
+     * 
+     * Método responsável por rerceber os dados e atualizar no banco.
+     * @param $request
+     * @param $response
+     */
     public function update(Request $request, Response $response)
     {
         $contents = json_decode($request->getBody()->getContents(), true);
 
         try {
-            // futuramento receberá do token.
-            $idUser = 1;
+            $jwt = $request->getAttribute('jwt');
+
+            $idUser = $jwt['sub'];
             
             $userDao = new UserDAO;
 
@@ -143,11 +176,19 @@ class UserController {
         }
     }
 
+    /**
+     * delete
+     * 
+     * Deleta o registro de um usuário autenticado.
+     * @param Request $request
+     * @param Response $resonse
+     */
     public function delete(Request $request, Response $response)
     {
         try {
-            // futuramento receberá do token.
-            $idUser = 3;
+            $jwt = $request->getAttribute('jwt');
+
+            $idUser = $jwt['sub'];
             
             $userDao = new UserDAO;
 

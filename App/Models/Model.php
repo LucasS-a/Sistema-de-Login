@@ -14,7 +14,7 @@ abstract class Model {
     /**
      * @var array $values
      * 
-     * Salva em um array os parâmetros da classe.
+     * Salva em um array com os parâmetros da classe.
      */
     protected $values = array();
 

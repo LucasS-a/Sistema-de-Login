@@ -87,3 +87,15 @@ BEGIN
     
 END ;;
 DELIMITER ;
+
+DELIMITER ;;
+CREATE PROCEDURE sp_users_delete(
+pidUser INT
+)
+BEGIN
+
+    DELETE FROM tb_tokens WHERE idUser = pidUser;
+    DELETE FROM tb_users WHERE iduser = pidUser;
+    
+END ;;
+DELIMITER ;

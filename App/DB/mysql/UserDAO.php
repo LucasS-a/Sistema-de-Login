@@ -21,6 +21,14 @@ class UserDAO extends Conect {
         parent::__construct();        
     }
 
+    /**
+     * getUSerByLogin
+     * 
+     * Recebe um login verifica no banco se tem o registro, caso não tenha retorna nulo e
+     * se tiver retorna um objeto do tipo User.
+     * @param string $login
+     * @return ?User $user 
+     */
     public function getUserByLogin($login):?User
     {
         try {
@@ -45,6 +53,14 @@ class UserDAO extends Conect {
         }
     }
 
+    /**
+     * getUSerById
+     * 
+     * Recebe um id verifica no banco se tem o registro, caso não tenha retorna nulo e
+     * se tiver retorna um objeto do tipo User.
+     * @param int $login
+     * @return ?User $user 
+     */
     public function getUserById($idUser):?User
     {
         try {
@@ -69,6 +85,13 @@ class UserDAO extends Conect {
         }
     }
 
+    /**
+     * save
+     * 
+     * Recebe um objeto do tipo User e salva no banco.
+     * @param string $login
+     * @return User $user 
+     */
     public function save(User $user):User
     {
         try {
@@ -102,6 +125,13 @@ class UserDAO extends Conect {
         }
     }
 
+    /**
+     * update
+     * 
+     * Recebe um objeto do tipo User e atualiza os dados no banco.
+     * @param string $login
+     * @return User $user 
+     */
     public function update(User $user):User
     {
         try {
@@ -137,11 +167,18 @@ class UserDAO extends Conect {
         }
     }
 
+    /**
+     * save
+     * 
+     * Recebe um idUser e deleta o registro no banco.
+     * @param string $login
+     * @return User $user 
+     */
     public function delete(int $idUser)
     {
         try {
-
-            parent::query('DELETE FROM tb_users WHERE idUser = :idUser',[
+            
+            parent::query('CALL sp_users_delete(:idUser)',[
                 ':idUser' => $idUser 
             ]);
         

@@ -7,6 +7,12 @@ use App\Exception\UserException;
 
 class User extends Model{
 
+    /**
+     * setValues
+     * 
+     * Recebe um array e salva como parâmetros do objeto.
+     * @param array $values
+     */
     public function setValues(array $values)
     {
         foreach ($values as $key => $value) {
