@@ -86,6 +86,38 @@ class UserDAO extends Conect {
     }
 
     /**
+     * getUSerByEmail
+     * 
+     * Recebe um email verifica no banco se tem o registro, caso não tenha retorna nulo e
+     * se tiver retorna um objeto do tipo User.
+     * @param int $login
+     * @return ?User $user 
+     */
+    public function getUserByEmail($email):?User
+    {
+        try {
+            $result = parent::select('SELECT * FROM tb_users WHERE email = :email',[
+                ':email' => $email
+            ]);
+
+            if ( count($result) === 0 )
+            {
+                return null;
+            }
+    
+            $user = new User;
+    
+            $user->setValues($result[0]);
+    
+            return $user;
+        } catch (\Exception $e) {
+
+            throw new DataBaseException($e->getMessage());
+        
+        }
+    }
+
+    /**
      * save
      * 
      * Recebe um objeto do tipo User e salva no banco.

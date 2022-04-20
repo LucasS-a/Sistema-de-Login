@@ -95,4 +95,33 @@ class TokenDAO extends Conect {
         }
 
     }
+
+    /**
+     * verifyRefreshToken
+     * 
+     * Verifica se tem o refresh token cadastrado no banco.
+     * @param string $token
+     * @retun bool  
+     */
+    public function verifyRefreshToken(string $resfreshToken):bool
+    {
+
+        try {
+            $result = parent::select('CALL sp_verify_refresh_token(:refreshToken)'
+            ,[
+                ':refreshToken' => $resfreshToken
+            ]);
+    
+            if(count($result) > 0)
+            {
+                return true;
+            }else {
+                return false;
+            }
+
+        } catch (\Exception $e) {
+            throw new DataBaseException($e->getMessage());
+        }
+
+    }
 }

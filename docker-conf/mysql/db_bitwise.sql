@@ -99,3 +99,19 @@ BEGIN
     
 END ;;
 DELIMITER ;
+
+DELIMITER ;;
+CREATE PROCEDURE sp_verify_refresh_token(
+prefreshToken VARCHAR(1000)
+)
+BEGIN
+
+    SELECT id FROM tb_tokens WHERE refreshToken = prefreshToken AND active = 1;
+
+    UPDATE tb_tokens 
+    SET
+        active = 0
+    WHERE
+        refreshToken = prefreshToken AND active = 1;
+END ;;
+DELIMITER ;
