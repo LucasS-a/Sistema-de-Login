@@ -25,6 +25,8 @@ $app->group('/user', function($app){
 
     $app->delete('/delete', UserController::class . ':delete');
 
+    $app->get('/logout', AuthController::class . ':logout');
+
 })
 ->add(new DateTimeExpired)
 ->add(new VerifyLogin)

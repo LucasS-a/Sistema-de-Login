@@ -4,6 +4,7 @@ namespace App\DB\mysql;
 
 use App\Exception\DataBaseException;
 use App\Models\Classes\Token;
+use App\Models\Classes\User;
 
 /**
  * TokenDAO
@@ -123,5 +124,18 @@ class TokenDAO extends Conect {
             throw new DataBaseException($e->getMessage());
         }
 
+    }
+
+    public function logout(User $user):void
+    {
+        try {
+            parent::query('DELETE FROM tb_tokens WHERE idUser = :idUser'
+            ,[
+                ':idUser' => $user->getIdUser()
+            ]);
+
+        } catch (\Exception $e) {
+            throw new DataBaseException($e->getMessage());
+        }
     }
 }

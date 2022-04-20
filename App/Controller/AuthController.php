@@ -83,6 +83,42 @@ class AuthController {
         }
     }
 
+    public function logout(Request $request, Response $response):Response
+    {
+        try {
+
+            $idUser = $request->getAttribute('jwt')['sub'];
+
+            $userDao = new UserDAO;
+
+            $user = $userDao->getUserById($idUser);
+
+            $tokenDao = new TokenDAO;
+
+            $tokenDao->logout($user);
+
+            $response->getBody()->write(json_encode(['succesfully']));
+
+            return $response->withStatus(200);
+
+        } catch (DataBaseException $e) {
+
+            $response->getBody()->write(json_encode([
+                'error' => $e->getMessage()
+            ]));
+
+            return $response->withStatus(500);
+
+        } catch (\Exception $e) {
+
+            $response->getBody()->write(json_encode([
+                'error' => $e->getMessage()
+            ]));
+
+            return $response->withStatus(500);
+        }
+    }
+
     /**
      * refreshToken
      * 
@@ -96,34 +132,43 @@ class AuthController {
      */
     public function refreshToken(Request $request, Response $response):Response
     {
-        $authorization = $request->getHeaders()["Authorization"][0];
+        try {
+            $authorization = $request->getHeaders()["Authorization"][0];
 
-        $arrayAuthorization = explode(" ", $authorization, 2);
+            $arrayAuthorization = explode(" ", $authorization, 2);
 
-        $refreshToken = $arrayAuthorization[1];
+            $refreshToken = $arrayAuthorization[1];
 
-        $tokenDAO = new TokenDAO;
+            $tokenDAO = new TokenDAO;
 
-        if(!$tokenDAO->verifyRefreshToken($refreshToken))
-        {
-            return $response->withStatus(401);
+            if(!$tokenDAO->verifyRefreshToken($refreshToken))
+            {
+                return $response->withStatus(401);
+            }
+
+            $email = $request->getAttribute('jwt')['email'];
+
+            $userDAO = new UserDAO;
+
+            $user = $userDAO->getUserByEmail($email);
+
+            $tokenModel = new Token;
+
+            $tokenModel->CreateToken($user);
+
+            $response->getBody()->write(json_encode([
+                "token" => $tokenModel->getToken(),
+                "refresh_token" => $tokenModel->getRefreshToken()
+            ]));
+
+            return $response->withStatus(200);
+
+        } catch (\Exception $e) {
+            $response->getBody()->write(json_encode([
+                'error' => $e->getMessage()
+            ]));
+
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
         }
-
-        $email = $request->getAttribute('jwt')['email'];
-
-        $userDAO = new UserDAO;
-
-        $user = $userDAO->getUserByEmail($email);
-
-        $tokenModel = new Token;
-
-        $tokenModel->CreateToken($user);
-
-        $response->getBody()->write(json_encode([
-            "token" => $tokenModel->getToken(),
-            "refresh_token" => $tokenModel->getRefreshToken()
-        ]));
-
-        return $response->withStatus(200);
     }
 }
