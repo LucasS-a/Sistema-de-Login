@@ -67,7 +67,8 @@ class Token extends Model{
     public function get($name)
     {
         try {
-            parent::get($name);
+            
+            return parent::get($name);
 
         } catch (\Exception $e) {
             throw new TokenException($e->getMessage());

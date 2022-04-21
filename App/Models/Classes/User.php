@@ -78,7 +78,8 @@ class User extends Model{
     public function get($name)
     {
         try {
-            parent::get($name);
+            
+            return parent::get($name);
 
         } catch (\Exception $e) {
             throw new UserException($e->getMessage());

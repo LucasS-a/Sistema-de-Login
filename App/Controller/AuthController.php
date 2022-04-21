@@ -45,7 +45,7 @@ class AuthController {
     
                 return $response->withStatus(404);
             
-            } else if ($user->getPassword() !== $password) {
+            } else if (!password_verify($password, $user->getPassword())) {
 
                 $response->getBody()->write(json_encode([
                     'error' => 'Login ou senha inválidos'

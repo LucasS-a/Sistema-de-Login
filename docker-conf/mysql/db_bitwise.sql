@@ -15,6 +15,10 @@ CREATE TABLE tb_users (
     PRIMARY KEY (idUser)
 );
 
+LOCK TABLES tb_users WRITE;
+INSERT INTO tb_users VALUES (1,'admin', 'Silva', 'admin@gmail.com', 'admin','$2y$12$YlooCyNvyTji8bPRcrfNfOKnVMmZA9ViM2A3IpFjmrpIbp5ovNmga',1,'2021-03-13 03:00:00');
+UNLOCK TABLES;
+
 DROP TABLE IF EXISTS tb_tokens;
 CREATE TABLE tb_tokens (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

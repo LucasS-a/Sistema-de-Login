@@ -139,7 +139,7 @@ class UserDAO extends Conect {
                 ':name'     => $user->getName(),
                 ':lastName' => $user->getLastName(),
                 ':login'    => $user->getLogin(),
-                ':password' => $user->getPassword(),
+                ':password' => password_hash($user->getPassword(), PASSWORD_BCRYPT, ["cost" => 10]),
                 ':email'    => $user->getEmail(),
                 ':gender'   => $user->getGender()
             ]);
@@ -181,7 +181,7 @@ class UserDAO extends Conect {
                 ':name'     => $user->getName(),
                 ':lastName' => $user->getLastName(),
                 ':login'    => $user->getLogin(),
-                ':password' => $user->getPassword(),
+                ':password' => password_hash($user->getPassword(), PASSWORD_BCRYPT, ["cost" => 10]),
                 ':email'    => $user->getEmail(),
                 ':gender'   => $user->getGender()
             ]);
