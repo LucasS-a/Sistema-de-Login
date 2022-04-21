@@ -70,4 +70,19 @@ class User extends Model{
         }
     }
 
+    /**
+     * get($name, $arg)
+     * 
+     * Método responsável por buscar os valores do objeto.
+     */
+    public function get($name)
+    {
+        try {
+            parent::get($name);
+
+        } catch (\Exception $e) {
+            throw new UserException($e->getMessage());
+        }
+    }
+
 }

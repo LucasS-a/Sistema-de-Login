@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\DB\mysql\TokenDAO;
 use App\Models\Classes\Token;
 use App\DB\mysql\UserDAO;
-use App\Exception\DataBaseException;
+use App\Exception\TokenException;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -43,7 +43,7 @@ class AuthController {
                     'error' => 'Login ou senha inválidos'
                 ]));
     
-                return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+                return $response->withStatus(404);
             
             } else if ($user->getPassword() !== $password) {
 
@@ -51,7 +51,7 @@ class AuthController {
                     'error' => 'Login ou senha inválidos'
                 ]));
     
-                return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
+                return $response->withStatus(404);
             }else {
 
                 $token = new Token;
@@ -63,23 +63,23 @@ class AuthController {
                     'refreshToken' => $token->getRefreshToken()
                 ]));
     
-                return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+                return $response->withStatus(200);
 
             }            
-        }catch (DataBaseException $e) {
+        }catch (TokenException $e) {
 
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage()
+                'Token error' => $e->getMessage()
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+            return $response->withStatus(500);
 
         }catch (\Exception $e) {
             $response->getBody()->write(json_encode([
                 'error' => $e->getMessage()
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+            return $response->withStatus(500);
         }
     }
 
@@ -101,10 +101,10 @@ class AuthController {
 
             return $response->withStatus(200);
 
-        } catch (DataBaseException $e) {
+        } catch (TokenException $e) {
 
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage()
+                'Token error' => $e->getMessage()
             ]));
 
             return $response->withStatus(500);
@@ -163,12 +163,20 @@ class AuthController {
 
             return $response->withStatus(200);
 
+        } catch (TokenException $e) {
+
+            $response->getBody()->write(json_encode([
+                'Token error' => $e->getMessage()
+            ]));
+
+            return $response->withStatus(500);
+
         } catch (\Exception $e) {
             $response->getBody()->write(json_encode([
                 'error' => $e->getMessage()
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+            return $response->withStatus(500);
         }
     }
 }

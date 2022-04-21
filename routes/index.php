@@ -35,4 +35,6 @@ $app->group('/user', function($app){
 $app->get('/refresh_token', AuthController::class . ':refreshToken')
 ->add(JwtAuth());
 
+$app->get('/teste', UserController::class . ':teste');
+
 $app->run();

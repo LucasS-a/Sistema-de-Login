@@ -41,21 +41,21 @@ class UserController {
                 'successfully'
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+            return $response->withStatus(201);
 
         } catch (UserException $e) {
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage()
+                'User error' => $e->getMessage()
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            return $response->withStatus(400);
         }catch (\Exception $e)
         {
             $response->getBody()->write(json_encode([
                 'error' => $e->getMessage()
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+            return $response->withStatus(500);
         }
 
         return $response;
@@ -89,22 +89,22 @@ class UserController {
                 'successfully'
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+            return $response->withStatus(201);
 
         } catch (UserException $e) {
             
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage()
+                'User error' => $e->getMessage()
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            return $response->withStatus(400);
 
         } catch (\Exception $e) {
             $response->getBody()->write(json_encode([
                 'error' => $e->getMessage()
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+            return $response->withStatus(500);
         }
     }
 
@@ -130,22 +130,22 @@ class UserController {
                 'successfully'
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+            return $response->withStatus(201);
 
         } catch (UserException $e) {
             
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage()
+                'User error' => $e->getMessage()
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            return $response->withStatus(400);
 
         } catch (\Exception $e) {
             $response->getBody()->write(json_encode([
                 'error' => $e->getMessage()
             ]));
 
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
+            return $response->withStatus(500);
         }
     }
     

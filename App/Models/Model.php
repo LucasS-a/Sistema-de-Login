@@ -70,7 +70,7 @@ abstract class Model {
         
         }else {
 
-            throw new ModelException('Atributo não definido', 500);
+            throw new ModelException('Atributo não setado', 500);
         
         }
     }
@@ -84,7 +84,7 @@ abstract class Model {
         }
     }
 
-    public function getValues()
+    public function getValues():array
     {
         return $this->values;
     }
