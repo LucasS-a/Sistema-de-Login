@@ -22,31 +22,27 @@ Acessado pelo endpoint http://localhost:8080/login.
 
 ### Atualização dos dados do clientes
 
-Acessado pelo endpoint http://localhost:8080/user/update.
-Com a configuração incluindo o Bearer Token.
+Acessado pelo endpoint http://localhost:8080/user/update, com o Bearer Token.
 
 ![Update](src/img/readme/update.png)
 
 ### Excluir cadastro.
 
-Acessado pelo endpoint http://localhost:8080/user/delete.
-Com a configuração incluindo o Bearer Token.
+Acessado pelo endpoint http://localhost:8080/user/delete, com o Bearer Token.
 
 ![Delete](src/img/readme/delete.png)
 
 ### Fazer o logout.
 
-Acessado pelo endpoint http://localhost:8080/user/logout.
-Com a configuração incluindo o Bearer Token.
+Acessado pelo endpoint http://localhost:8080/user/logout, com o Bearer Token.
 
 ![logout](src/img/readme/logout.png)
 
 ### Recuperar token expirado.
 
-Acessado pelo endpoint http://localhost:8080/refresh_token.
-Com a configuração incluindo o Bearer Token.
+Acessado pelo endpoint http://localhost:8080/refresh_token, com o Bearer Token.
 
-![logout](src/img/readme/refreshToken.png)
+![refresh token](src/img/readme/refreshToken.png)
 
 ## Como executa-lo
 
