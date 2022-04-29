@@ -38,21 +38,27 @@ class UserController {
             $user = $userDao->save($user);
 
             $response->getBody()->write(json_encode([
-                'successfully'
+                'error'      => false,
+                'message'   => 'successfully',
+                'data'      => $user->getValues()
             ]));
 
             return $response->withStatus(201);
 
         } catch (UserException $e) {
             $response->getBody()->write(json_encode([
-                'User error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(400);
         }catch (\Exception $e)
         {
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(500);
@@ -86,7 +92,9 @@ class UserController {
             $user = $userDao->update($user);
 
             $response->getBody()->write(json_encode([
-                'successfully'
+                'error'      => false,
+                'message'   => 'succesfully',
+                'data'      => $user->getValues()
             ]));
 
             return $response->withStatus(201);
@@ -94,14 +102,18 @@ class UserController {
         } catch (UserException $e) {
             
             $response->getBody()->write(json_encode([
-                'User error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(400);
 
         } catch (\Exception $e) {
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(500);
@@ -127,7 +139,9 @@ class UserController {
             $userDao->delete($idUser);
             
             $response->getBody()->write(json_encode([
-                'successfully'
+                'error'      => false,
+                'message'   => 'successfuly',
+                'data'      => []
             ]));
 
             return $response->withStatus(201);
@@ -135,14 +149,18 @@ class UserController {
         } catch (UserException $e) {
             
             $response->getBody()->write(json_encode([
-                'User error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(400);
 
         } catch (\Exception $e) {
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(500);

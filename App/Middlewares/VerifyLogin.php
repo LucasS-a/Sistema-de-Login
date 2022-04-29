@@ -38,7 +38,9 @@ class VerifyLogin extends Middleware{
             $response = new Response();
 
             $response->getBody()->write((string) $response->getBody() . json_encode([
-                'error' => "Acesso negado."
+                'error'      => true,
+                'message'    => "Acesso negado.",
+                'data'       => []
             ]));
 
             return $response->withStatus(401);

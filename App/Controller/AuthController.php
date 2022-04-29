@@ -40,7 +40,9 @@ class AuthController {
             if (is_null($user))
             {
                 $response->getBody()->write(json_encode([
-                    'error' => 'Login ou senha inválidos'
+                    'error'      => true,
+                    'message'   => 'Login ou senha inválidos.',
+                    'data'      => []
                 ]));
     
                 return $response->withStatus(404);
@@ -48,7 +50,9 @@ class AuthController {
             } else if (!password_verify($password, $user->getPassword())) {
 
                 $response->getBody()->write(json_encode([
-                    'error' => 'Login ou senha inválidos'
+                    'error'      => true,
+                    'message'   => 'Login ou senha inválidos.',
+                    'data'      => []
                 ]));
     
                 return $response->withStatus(404);
@@ -59,8 +63,12 @@ class AuthController {
                 $token = $token->CreateToken($user);
 
                 $response->getBody()->write(json_encode([
-                    'token' => $token->getToken(),
-                    'refreshToken' => $token->getRefreshToken()
+                    'error'      => false,
+                    'message'   => 'successfuly',
+                    'data'      => [
+                        'acess_token'         => $token->getToken(),
+                        'refresh_token'  => $token->getRefreshToken()
+                    ]
                 ]));
     
                 return $response->withStatus(200);
@@ -69,14 +77,18 @@ class AuthController {
         }catch (TokenException $e) {
 
             $response->getBody()->write(json_encode([
-                'Token error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(500);
 
         }catch (\Exception $e) {
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(500);
@@ -97,14 +109,20 @@ class AuthController {
 
             $tokenDao->logout($user);
 
-            $response->getBody()->write(json_encode(['succesfully']));
+            $response->getBody()->write(json_encode([
+                'error'      => false,
+                'message'   => 'successfuly',
+                'data'      => []
+            ]));
 
             return $response->withStatus(200);
 
         } catch (TokenException $e) {
 
             $response->getBody()->write(json_encode([
-                'Token error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(500);
@@ -112,7 +130,9 @@ class AuthController {
         } catch (\Exception $e) {
 
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(500);
@@ -157,8 +177,12 @@ class AuthController {
             $tokenModel->CreateToken($user);
 
             $response->getBody()->write(json_encode([
-                "token" => $tokenModel->getToken(),
-                "refresh_token" => $tokenModel->getRefreshToken()
+                'error'      => false,
+                'message'   => 'successfuly',
+                'data'      => [
+                    "acess_token"   => $tokenModel->getToken(),
+                    "refresh_token" => $tokenModel->getRefreshToken()
+                ]
             ]));
 
             return $response->withStatus(200);
@@ -166,14 +190,18 @@ class AuthController {
         } catch (TokenException $e) {
 
             $response->getBody()->write(json_encode([
-                'Token error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(500);
 
         } catch (\Exception $e) {
             $response->getBody()->write(json_encode([
-                'error' => $e->getMessage()
+                'error'      => true,
+                'message'   => $e->getMessage(),
+                'data'      => []
             ]));
 
             return $response->withStatus(500);

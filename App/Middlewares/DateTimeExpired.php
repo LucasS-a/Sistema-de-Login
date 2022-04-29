@@ -35,7 +35,9 @@ class DateTimeExpired extends Middleware {
             $response = new Response();
 
             $response->getBody()->write((string) $response->getBody() . json_encode([
-                "Expired Token"
+                'error'      => true,
+                'message'   => "Expired Token",
+                'data'      => []
             ]));
 
             return $response->withStatus(401);
